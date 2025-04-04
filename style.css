@@ -22,6 +22,9 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: var(--tg-theme-bg-color);
     color: var(--tg-theme-text-color);
+    overscroll-behavior: none; /* Убираем "оттягивание" страницы */
+     /* Предотвращаем скролл body, когда игра активна */
+    touch-action: none;
 }
 
 .app-container {
@@ -30,7 +33,7 @@ body {
     min-height: var(--tg-internal-viewport-stable-height); /* Занимаем всю доступную высоту */
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, #1a1a1a, #2c2c2e);
+    /* background: linear-gradient(180deg, #1a1a1a, #2c2c2e); */ /* Убрал градиент для простоты */
 }
 
 .config-section {
@@ -70,20 +73,20 @@ body {
     background-color: var(--control-button-active-bg);
     color: var(--control-button-active-text);
     font-weight: 600;
-    box-shadow: 0 0 8px var(--control-button-active-bg);
+    /* box-shadow: 0 0 8px var(--control-button-active-bg); */ /* Убрал тень для простоты */
 }
 
 /* Improved hover effect for control buttons */
-.segmented-control .control-button:hover {
-    background-color: var(--control-button-active-bg);
-    color: var(--control-button-active-text);
-}
+/* .segmented-control .control-button:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1);
+} */
+
 
 /* Сетка компонентов */
 .component-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Две колонки */
-    gap: 15px; /* Increase spacing between components */
+    gap: 10px; /* Уменьшил gap для компактности */
 }
 
 .component-item {
@@ -96,20 +99,12 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
     color: var(--tg-theme-text-color);
-    min-height: 90px; /* Чтобы кнопки были примерно квадратными */
+    min-height: 90px;
     box-sizing: border-box;
     font-size: 14px;
     text-align: center;
-    transition: all 0.2s ease;
-}
-
-/* Hover effect for component items */
-.component-item:hover {
-    border-color: var(--component-selected-border-color);
-    background-color: var(--control-button-bg);
-    color: var(--control-button-active-text);
 }
 
 /* Active state for component items */
@@ -117,15 +112,18 @@ body {
     border-color: var(--component-selected-border-color);
     background-color: var(--control-button-active-bg);
     color: var(--control-button-active-text);
-    box-shadow: 0 0 10px var(--control-button-active-bg);
+    /* box-shadow: 0 0 10px var(--control-button-active-bg); */ /* Убрал тень */
 }
 
 .component-icon {
-    font-size: 24px; /* Размер "иконки"-заглушки */
+    font-size: 24px;
     margin-bottom: 8px;
-    /* Здесь будут стили для реальных иконок (SVG, Font Awesome и т.д.) */
-     color: var(--tg-theme-hint-color); /* Иконки пока серые */
+     color: var(--tg-theme-hint-color);
 }
+.component-item.selected .component-icon {
+     color: var(--control-button-active-text); /* Меняем цвет иконки при выборе */
+}
+
 
 .component-label {
     font-weight: 500;
@@ -133,17 +131,17 @@ body {
 
 /* Секция статистики */
 .stats-section {
-    margin-top: auto; /* Прижимает статистику и кнопку вниз, если есть место */
-    padding-top: 10px; /* Небольшой отступ сверху */
+    margin-top: auto;
+    padding-top: 10px;
 }
 
 .stats-display {
     display: flex;
     justify-content: space-around;
-    background-color: var(--tg-theme-secondary-bg-color); /* Чуть другой фон для блока статов */
-    padding: 20px 15px; /* Add more padding for better spacing */
+    background-color: var(--tg-theme-secondary-bg-color);
+    padding: 15px 10px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */ /* Убрал тень */
 }
 
 .stat-item {
@@ -155,13 +153,7 @@ body {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 4px;
-    color: var(--tg-theme-link-color); /* Сделаем значения поярче */
-}
-
-/* Highlight stat values on hover */
-.stat-item:hover .stat-value {
-    color: var(--control-button-active-bg);
-    transition: color 0.2s ease;
+    color: var(--tg-theme-link-color);
 }
 
 .stat-label {
@@ -171,13 +163,13 @@ body {
 
 /* Кнопка действия внизу */
 .app-footer {
-    margin-top: 20px; /* Отступ от статистики */
-    padding-bottom: 10px; /* Отступ снизу */
+    margin-top: 20px;
+    padding-bottom: 10px;
 }
 
 .action-button {
     width: 100%;
-    padding: 16px; /* Slightly larger button for better usability */
+    padding: 14px;
     font-size: 16px;
     font-weight: 600;
     background-color: var(--tg-theme-button-color);
@@ -186,18 +178,6 @@ body {
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    transition: all 0.2s ease;
-}
-
-/* Add hover effect for the action button */
-.action-button:hover:not(:disabled) {
-    background-color: #285a8e; /* Slightly darker shade for hover */
-}
-
-/* Add focus effect for better accessibility */
-.action-button:focus {
-    outline: 2px solid var(--control-button-active-bg);
-    outline-offset: 2px;
 }
 
 .action-button:disabled {
@@ -206,7 +186,41 @@ body {
     cursor: not-allowed;
 }
 
-/* Скрытие неактивных табов (пока просто скрываем все, кроме сборки) */
-.component-section:not(#assembly-content) {
-    display: none;
+/* === СТИЛИ ДЛЯ ИГРЫ === */
+
+#game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--tg-internal-viewport-stable-height, 100vh); /* Занять всю высоту */
+    background-color: #87CEEB; /* Цвет неба по умолчанию */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    overflow: hidden;
 }
+
+#game-canvas {
+    display: block;
+    background-color: transparent; /* Фон задан у контейнера */
+    max-width: 100%;
+    max-height: 100%;
+    /* Предотвращаем стандартные действия на canvas (важно для тачскринов) */
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Класс для body, когда игра активна */
+.game-active .app-container {
+    display: none; /* Скрываем основной интерфейс */
+}
+.game-active #game-container {
+    display: flex !important; /* Показываем игру */
+}
+
+/* ====================== */

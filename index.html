@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <!-- Добавляем user-scalable=no для предотвращения масштабирования в игре -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Конфигуратор Дрона</title>
     <link rel="stylesheet" href="style.css">
@@ -59,6 +60,16 @@
             </div>
         </section>
 
+         <!-- Секция Тест (пока пустая) -->
+         <section class="config-section component-section" id="test-content" style="display: none;">
+            <p>Здесь будет контент для вкладки "Тест".</p>
+         </section>
+
+         <!-- Секция Настройки (пока пустая) -->
+         <section class="config-section component-section" id="settings-content" style="display: none;">
+             <p>Здесь будет контент для вкладки "Настройки".</p>
+         </section>
+
         <!-- Статистика -->
         <section class="config-section stats-section">
             <div class="stats-display">
@@ -82,7 +93,14 @@
             <button id="assemble-button" class="action-button">Собрать дрон</button>
         </footer>
 
+    </div> <!-- Конец app-container -->
+
+    <!-- === БЛОК ДЛЯ ИГРЫ === -->
+    <div id="game-container" style="display: none;">
+        <canvas id="game-canvas"></canvas>
+        <!-- Можно добавить сюда кнопки управления на экране, если нужно -->
     </div>
+    <!-- ============================ -->
 
     <script src="script.js"></script>
 </body>
