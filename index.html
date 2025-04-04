@@ -3,16 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тестовый Mini App</title>
+    <title>Конфигуратор Дрона</title>
     <link rel="stylesheet" href="style.css">
     <!-- Подключаем скрипт Telegram Web Apps -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <h1>Привет из Mini App!</h1>
-    <p>Это простое тестовое приложение.</p>
-    <div id="user-info">Загрузка данных пользователя...</div>
-    <button id="close-button">Закрыть</button>
+    <div class="app-container">
+
+        <!-- Тип дрона -->
+        <section class="config-section">
+            <h2 class="section-title">Тип дрона</h2>
+            <div class="segmented-control drone-type">
+                <button class="control-button active" data-type="quad">Квадрокоптер</button>
+                <button class="control-button" data-type="hexa">Гексакоптер</button>
+            </div>
+        </section>
+
+        <!-- Основные табы -->
+        <section class="config-section">
+            <div class="segmented-control main-tabs">
+                <button class="control-button active" data-tab="assembly">Сборка</button>
+                <button class="control-button" data-tab="test">Тест</button>
+                <button class="control-button" data-tab="settings">Настройки</button>
+            </div>
+        </section>
+
+        <!-- Сетка компонентов (пока видна только для "Сборки") -->
+        <section class="config-section component-section" id="assembly-content">
+            <div class="component-grid">
+                <button class="component-item" data-component="motors">
+                    <span class="component-icon">?</span> <!-- Заглушка для иконки -->
+                    <span class="component-label">Motors</span>
+                </button>
+                <button class="component-item" data-component="battery">
+                    <span class="component-icon">?</span>
+                    <span class="component-label">Battery</span>
+                </button>
+                <button class="component-item" data-component="gps">
+                    <span class="component-icon">?</span>
+                    <span class="component-label">GPS</span>
+                </button>
+                <button class="component-item" data-component="camera">
+                     <span class="component-icon">?</span>
+                    <span class="component-label">Camera</span>
+                </button>
+                 <button class="component-item" data-component="gyro">
+                    <span class="component-icon">?</span>
+                    <span class="component-label">Gyro</span>
+                </button>
+                 <button class="component-item" data-component="radio">
+                    <span class="component-icon">?</span>
+                    <span class="component-label">Radio</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Статистика -->
+        <section class="config-section stats-section">
+            <div class="stats-display">
+                <div class="stat-item">
+                    <span class="stat-value" id="power-value">0%</span>
+                    <span class="stat-label">Мощность</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="weight-value">0%</span>
+                    <span class="stat-label">Вес</span>
+                </div>
+                 <div class="stat-item">
+                    <span class="stat-value" id="range-value">0%</span>
+                    <span class="stat-label">Дальность</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Кнопка действия -->
+        <footer class="app-footer">
+            <button id="assemble-button" class="action-button">Собрать дрон</button>
+        </footer>
+
+    </div>
 
     <script src="script.js"></script>
 </body>

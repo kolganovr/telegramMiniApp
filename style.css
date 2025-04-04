@@ -1,18 +1,212 @@
-body {
-    font-family: sans-serif;
-    padding: 20px;
-    text-align: center;
-    color: var(--tg-theme-text-color, #222); /* Используем цвет текста из темы Telegram */
-    background-color: var(--tg-theme-bg-color, #fff); /* Используем фон из темы Telegram */
+/* Используем переменные Telegram для базовых цветов */
+:root {
+    --tg-theme-bg-color: var(--tg-theme-bg-color, #1a1a1a);
+    --tg-theme-text-color: var(--tg-theme-text-color, #ffffff);
+    --tg-theme-hint-color: var(--tg-theme-hint-color, #aaaaaa);
+    --tg-theme-link-color: var(--tg-theme-link-color, #5e9de1);
+    --tg-theme-button-color: var(--tg-theme-button-color, #3771b1);
+    --tg-theme-button-text-color: var(--tg-theme-button-text-color, #ffffff);
+    --tg-theme-secondary-bg-color: var(--tg-theme-secondary-bg-color, #2c2c2e);
+    --tg-internal-viewport-stable-height: var(--tg-viewport-stable-height, 100vh); /* Используем стабильную высоту */
+
+    --component-bg-color: #2c2c2e; /* Фон компонентов чуть светлее */
+    --component-border-color: #444;
+    --component-selected-border-color: var(--tg-theme-button-color);
+    --control-button-bg: #3a3a3c;
+    --control-button-active-bg: var(--tg-theme-button-color);
+    --control-button-active-text: var(--tg-theme-button-text-color);
 }
 
-button {
-    padding: 10px 20px;
-    margin-top: 15px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: var(--tg-theme-button-color, #5bc0de); /* Цвет кнопки из темы */
-    color: var(--tg-theme-button-text-color, #fff); /* Цвет текста кнопки из темы */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+}
+
+.app-container {
+    padding: 15px;
+    box-sizing: border-box;
+    min-height: var(--tg-internal-viewport-stable-height); /* Занимаем всю доступную высоту */
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #1a1a1a, #2c2c2e);
+}
+
+.config-section {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 14px;
+    color: var(--tg-theme-hint-color);
+    margin-bottom: 8px;
+    margin-top: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Стили для переключателей (Тип дрона, Табы) */
+.segmented-control {
+    display: flex;
+    background-color: var(--control-button-bg);
+    border-radius: 8px;
+    overflow: hidden; /* Чтобы скругление работало */
+}
+
+.segmented-control .control-button {
+    flex-grow: 1;
+    padding: 10px 5px;
+    background-color: transparent;
+    color: var(--tg-theme-text-color);
     border: none;
-    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-align: center;
+}
+
+.segmented-control .control-button.active {
+    background-color: var(--control-button-active-bg);
+    color: var(--control-button-active-text);
+    font-weight: 600;
+    box-shadow: 0 0 8px var(--control-button-active-bg);
+}
+
+/* Improved hover effect for control buttons */
+.segmented-control .control-button:hover {
+    background-color: var(--control-button-active-bg);
+    color: var(--control-button-active-text);
+}
+
+/* Сетка компонентов */
+.component-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Две колонки */
+    gap: 15px; /* Increase spacing between components */
+}
+
+.component-item {
+    background-color: var(--component-bg-color);
+    border: 2px solid var(--component-border-color);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    color: var(--tg-theme-text-color);
+    min-height: 90px; /* Чтобы кнопки были примерно квадратными */
+    box-sizing: border-box;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+/* Hover effect for component items */
+.component-item:hover {
+    border-color: var(--component-selected-border-color);
+    background-color: var(--control-button-bg);
+    color: var(--control-button-active-text);
+}
+
+/* Active state for component items */
+.component-item.selected {
+    border-color: var(--component-selected-border-color);
+    background-color: var(--control-button-active-bg);
+    color: var(--control-button-active-text);
+    box-shadow: 0 0 10px var(--control-button-active-bg);
+}
+
+.component-icon {
+    font-size: 24px; /* Размер "иконки"-заглушки */
+    margin-bottom: 8px;
+    /* Здесь будут стили для реальных иконок (SVG, Font Awesome и т.д.) */
+     color: var(--tg-theme-hint-color); /* Иконки пока серые */
+}
+
+.component-label {
+    font-weight: 500;
+}
+
+/* Секция статистики */
+.stats-section {
+    margin-top: auto; /* Прижимает статистику и кнопку вниз, если есть место */
+    padding-top: 10px; /* Небольшой отступ сверху */
+}
+
+.stats-display {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--tg-theme-secondary-bg-color); /* Чуть другой фон для блока статов */
+    padding: 20px 15px; /* Add more padding for better spacing */
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--tg-theme-link-color); /* Сделаем значения поярче */
+}
+
+/* Highlight stat values on hover */
+.stat-item:hover .stat-value {
+    color: var(--control-button-active-bg);
+    transition: color 0.2s ease;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--tg-theme-hint-color);
+}
+
+/* Кнопка действия внизу */
+.app-footer {
+    margin-top: 20px; /* Отступ от статистики */
+    padding-bottom: 10px; /* Отступ снизу */
+}
+
+.action-button {
+    width: 100%;
+    padding: 16px; /* Slightly larger button for better usability */
+    font-size: 16px;
+    font-weight: 600;
+    background-color: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+/* Add hover effect for the action button */
+.action-button:hover:not(:disabled) {
+    background-color: #285a8e; /* Slightly darker shade for hover */
+}
+
+/* Add focus effect for better accessibility */
+.action-button:focus {
+    outline: 2px solid var(--control-button-active-bg);
+    outline-offset: 2px;
+}
+
+.action-button:disabled {
+    background-color: var(--tg-theme-secondary-bg-color);
+    color: var(--tg-theme-hint-color);
+    cursor: not-allowed;
+}
+
+/* Скрытие неактивных табов (пока просто скрываем все, кроме сборки) */
+.component-section:not(#assembly-content) {
+    display: none;
 }
